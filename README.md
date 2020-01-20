@@ -7,9 +7,9 @@
 * ## Estrutura das aulas
 
   * **Aula 1**
-      * [Slides - aula 1](https://docs.google.com/presentation/d/1uTZsgOfTR2DZgLjE344b2IjhYPrlWpnqp0iJ_RQx-lE/edit?usp=sharing)
+      * [Slides - aula 1](https://docs.google.com/presentation/d/1FMY-FSPFy8WiVmWvgxOQCdHaggDkFhKKkxYprlBgaBw/edit?usp=sharing)
   * **Aula 2**
-      * [Slides - aula 2](https://docs.google.com/presentation/d/1jafO9Yq_v1NGioiRyeDWgvbrUX9LtzgAUoQmGvKCv7Y/edit?usp=sharing)
+      * [Slides - aula 2](https://docs.google.com/presentation/d/1kJJVGopZkU5yBdLXxFIguXVzMekdkkUaSXEHMdcmQ_U/edit?usp=sharing)
       * Criação do projeto inicial com [Spring Initializr](https://start.spring.io/)
       * Entendendo o contexto do Spring
         * Inversão de controle
