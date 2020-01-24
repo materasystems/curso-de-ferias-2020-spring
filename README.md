@@ -20,3 +20,11 @@
         * Uso de *annotations* **@Component**, **@Autowired**, **@Primary** e **@Qualifier**
       * Uso de Spring Profiles
       * [Branch - aula 2](https://github.com/materasystems/curso-de-ferias-2020-spring/tree/aula2)
+  * **Aula 3**
+      * JPA
+      * Spring Data
+      * H2 console
+      * Criação da estrutura do pacote **entity** com as entidades do banco de dados
+      * Conexão estabelecida com banco de dados
+      * Criação da estrutura do pacote **repository**
+      * [Branch - aula 3](https://github.com/materasystems/curso-de-ferias-2020-spring/tree/aula3)
