@@ -40,7 +40,7 @@ public class AppStartupRunner implements ApplicationRunner {
         Cliente cliente3 = clienteRepository.findByCpf(cliente.getCpf()).orElse(null);
         System.out.println("Cliente 3: " + cliente3);
 
-        Cliente cliente4 = clienteRepository.findByCpf(cliente.getCpf()).orElse(null);
+        Cliente cliente4 = clienteRepository.buscaPorCpf(cliente.getCpf()).orElse(null);
         System.out.println("Cliente 4: " + cliente4);
 
         Cliente cliente5 = clienteRepository.buscaPorCpfNativeQuery(cliente.getCpf()).orElse(null);
