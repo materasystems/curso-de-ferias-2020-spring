@@ -28,3 +28,6 @@
       * Conexão estabelecida com banco de dados
       * Criação da estrutura do pacote **repository**
       * [Branch - aula 3](https://github.com/materasystems/curso-de-ferias-2020-spring/tree/aula3)
+
+* ### Modelagem
+    ![modelagem](etc/digitalbank-der.png)
