@@ -35,6 +35,10 @@
       * Alterações nos enums **Natureza**, **SituacaoConta** e **TipoLancamento** e seus mapeamentos para não gravar o ordinal ou a string dos enums
       * Criação da estrutura do pacote **service**
       * [Branch - aula 4](https://github.com/materasystems/curso-de-ferias-2020-spring/tree/aula4)
+  * **Aula 5**
+      * Criando consultas necessárias nas classes *Repository* para as validações feitas nas classes *Service*
+      * Finalizando criação das regras de negócio nas classes do pacote **service**
+      * [Branch - aula 5](https://github.com/materasystems/curso-de-ferias-2020-spring/tree/aula5)
 
 * ### Modelagem
     ![modelagem](etc/digitalbank-der.png)

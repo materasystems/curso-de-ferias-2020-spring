@@ -3,6 +3,7 @@ package com.matera.cursoferias.digitalbank.service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -27,7 +28,7 @@ public class ClienteService {
 
     @Transactional
     public ContaResponseDTO cadastra(ClienteRequestDTO clienteRequestDTO) {
-        valida(clienteRequestDTO);
+        validaCadastro(clienteRequestDTO);
 
         Cliente cliente = requestDTOParaEntidade(clienteRequestDTO, new Cliente());
 
@@ -48,27 +49,38 @@ public class ClienteService {
 
         clientes.forEach(cli -> clientesResponseDTO.add(entidadeParaResponseDTO(cli)));
 
-        //for (Cliente cliente : clientes) {
-        //    clientesResponseDTO.add(entidadeParaResponseDTO(cliente));
-        //}
-
         return clientesResponseDTO;
     }
 
+    @Transactional
     public void atualiza(Long id, ClienteRequestDTO clienteRequestDTO) {
+    	validaAtualizacao(id, clienteRequestDTO);
+
         Cliente clienteAtualizado = requestDTOParaEntidade(clienteRequestDTO, findById(id));
 
         clienteRepository.save(clienteAtualizado);
     }
 
+    public ContaResponseDTO consultaContaPorIdCliente(Long idCliente) {
+	    return contaService.consultaContaPorIdCliente(idCliente);
+	}
+
     private Cliente findById(Long id) {
-        return clienteRepository.findById(id).orElseThrow(() -> new ServiceException("Cliente de ID " + id + " não encontrado."));
+        return clienteRepository.findById(id)
+        						.orElseThrow(() -> new ServiceException("Cliente de ID " + id + " não encontrado."));
     }
 
-    private void valida(ClienteRequestDTO clienteRequestDTO) {
+    private void validaCadastro(ClienteRequestDTO clienteRequestDTO) {
         if (clienteRepository.findByCpf(clienteRequestDTO.getCpf()).isPresent()) {
-            throw new ServiceException("Já existe um cliente cadastrado com o CPF informado (" +
-                                       clienteRequestDTO.getCpf() + ")");
+            throw new ServiceException("Já existe um cliente cadastrado com o CPF informado (" + clienteRequestDTO.getCpf() + ")");
+        }
+    }
+
+    private void validaAtualizacao(Long id, ClienteRequestDTO clienteRequestDTO) {
+        Optional<Cliente> cliente = clienteRepository.findByCpf(clienteRequestDTO.getCpf());
+
+        if (cliente.isPresent() && !cliente.get().getId().equals(id)) {
+            throw new ServiceException("Já existe um cliente cadastrado com o CPF informado (" + clienteRequestDTO.getCpf() + ")");
         }
     }
 
@@ -89,18 +101,18 @@ public class ClienteService {
     }
 
     private ClienteResponseDTO entidadeParaResponseDTO(Cliente cliente) {
-        return ClienteResponseDTO.builder().id(cliente.getId())
+        return ClienteResponseDTO.builder().bairro(cliente.getBairro())
+        								   .cep(cliente.getCep())
+        								   .cidade(cliente.getCidade())
+        								   .complemento(cliente.getComplemento())
+        								   .cpf(cliente.getCpf())
+        								   .estado(cliente.getEstado())
+        								   .id(cliente.getId())
+        								   .logradouro(cliente.getLogradouro())
                                            .nome(cliente.getNome())
-                                           .cpf(cliente.getCpf())
-                                           .telefone(cliente.getTelefone())
-                                           .rendaMensal(cliente.getRendaMensal())
-                                           .logradouro(cliente.getLogradouro())
                                            .numero(cliente.getNumero())
-                                           .complemento(cliente.getComplemento())
-                                           .bairro(cliente.getBairro())
-                                           .cidade(cliente.getCidade())
-                                           .estado(cliente.getEstado())
-                                           .cep(cliente.getCep())
+                                           .rendaMensal(cliente.getRendaMensal())
+                                           .telefone(cliente.getTelefone())
                                            .build();
     }
 
