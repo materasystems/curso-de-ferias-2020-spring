@@ -19,8 +19,7 @@ public class AppStartupRunner implements ApplicationRunner {
 
     @Override
     public void run(ApplicationArguments args) throws Exception {
-        Cliente cliente = new Cliente(null,
-                                      "Cliente 1",
+        Cliente cliente = new Cliente("Cliente 1",
                                       "01234567890",
                                       4499998877L,
                                       BigDecimal.valueOf(1000),
@@ -39,12 +38,6 @@ public class AppStartupRunner implements ApplicationRunner {
 
         Cliente cliente3 = clienteRepository.findByCpf(cliente.getCpf()).orElse(null);
         System.out.println("Cliente 3: " + cliente3);
-
-        Cliente cliente4 = clienteRepository.buscaPorCpf(cliente.getCpf()).orElse(null);
-        System.out.println("Cliente 4: " + cliente4);
-
-        Cliente cliente5 = clienteRepository.buscaPorCpfNativeQuery(cliente.getCpf()).orElse(null);
-        System.out.println("Cliente 5: " + cliente5);
 
         clienteRepository.delete(cliente2);
         Optional<Cliente> cliente6 = clienteRepository.findById(cliente.getId());
