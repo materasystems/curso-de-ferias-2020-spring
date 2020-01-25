@@ -28,6 +28,13 @@
       * Conexão estabelecida com banco de dados
       * Criação da estrutura do pacote **repository**
       * [Branch - aula 3](https://github.com/materasystems/curso-de-ferias-2020-spring/tree/aula3)
+  * **Aula 4**
+      * Refatorando entidades com a criação da classe **EntidadeBase**
+      * Criação da estrutura do pacote **dto** com classes de *Request* e *Response*
+      * Refatorando entidades e DTOs com o uso de Lombok
+      * Alterações nos enums **Natureza**, **SituacaoConta** e **TipoLancamento** e seus mapeamentos para não gravar o ordinal ou a string dos enums
+      * Criação da estrutura do pacote **service**
+      * [Branch - aula 4](https://github.com/materasystems/curso-de-ferias-2020-spring/tree/aula4)
 
 * ### Modelagem
     ![modelagem](etc/digitalbank-der.png)
