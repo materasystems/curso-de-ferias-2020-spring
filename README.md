@@ -37,6 +37,7 @@
       * [Branch - aula 4](https://github.com/materasystems/curso-de-ferias-2020-spring/tree/aula4)
   * **Aula 5**
       * Criando consultas necessárias nas classes *Repository* para as validações feitas nas classes *Service*
+      * Finalizando criação das classes de *Request* e *Response* no pacote **dto**
       * Finalizando criação das regras de negócio nas classes do pacote **service**
       * [Branch - aula 5](https://github.com/materasystems/curso-de-ferias-2020-spring/tree/aula5)
 
