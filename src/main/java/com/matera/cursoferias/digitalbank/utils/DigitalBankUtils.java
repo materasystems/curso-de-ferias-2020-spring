@@ -1,4 +1,4 @@
-package com.matera.digitalbank.utils;
+package com.matera.cursoferias.digitalbank.utils;
 
 import java.math.BigDecimal;
 

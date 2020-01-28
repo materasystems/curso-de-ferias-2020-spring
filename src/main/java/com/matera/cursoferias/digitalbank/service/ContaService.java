@@ -23,7 +23,7 @@ import com.matera.cursoferias.digitalbank.enumerator.SituacaoConta;
 import com.matera.cursoferias.digitalbank.enumerator.TipoLancamento;
 import com.matera.cursoferias.digitalbank.exception.ServiceException;
 import com.matera.cursoferias.digitalbank.repository.ContaRepository;
-import com.matera.digitalbank.utils.DigitalBankUtils;
+import com.matera.cursoferias.digitalbank.utils.DigitalBankUtils;
 
 @Service
 public class ContaService {
@@ -92,7 +92,7 @@ public class ContaService {
 	public ExtratoResponseDTO consultaExtratoPorPeriodo(Long id, LocalDate dataInicial, LocalDate dataFinal) {
 		Conta conta = findById(id);
 
-		List<ComprovanteResponseDTO> comprovantesResponseDTO = lancamentoService.consultaExtratoPorPeriodo(dataInicial, dataFinal);
+		List<ComprovanteResponseDTO> comprovantesResponseDTO = lancamentoService.consultaExtratoPorPeriodo(conta, dataInicial, dataFinal);
 
 		ExtratoResponseDTO extratoResponseDTO = new ExtratoResponseDTO();
 		extratoResponseDTO.setConta(entidadeParaResponseDTO(conta));

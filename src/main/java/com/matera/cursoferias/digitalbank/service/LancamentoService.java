@@ -22,7 +22,7 @@ import com.matera.cursoferias.digitalbank.exception.ServiceException;
 import com.matera.cursoferias.digitalbank.repository.EstornoRepository;
 import com.matera.cursoferias.digitalbank.repository.LancamentoRepository;
 import com.matera.cursoferias.digitalbank.repository.TransferenciaRepository;
-import com.matera.digitalbank.utils.DigitalBankUtils;
+import com.matera.cursoferias.digitalbank.utils.DigitalBankUtils;
 
 @Service
 public class LancamentoService {
@@ -67,15 +67,15 @@ public class LancamentoService {
 
 	public List<ComprovanteResponseDTO> consultaExtratoCompleto(Conta conta) {
 		List<Lancamento> lancamentos = lancamentoRepository.findByConta_IdOrderByIdDesc(conta.getId());
-
 		List<ComprovanteResponseDTO> comprovantesResponseDTO = new ArrayList<>();
+
 		lancamentos.forEach(l -> comprovantesResponseDTO.add(entidadeParaComprovanteResponseDTO(l)));
 
 		return comprovantesResponseDTO;
 	}
 
-	public List<ComprovanteResponseDTO> consultaExtratoPorPeriodo(LocalDate dataInicial, LocalDate dataFinal) {
-		List<Lancamento> lancamentos = lancamentoRepository.consultaLancamentosPorPeriodo(dataInicial, dataFinal);
+	public List<ComprovanteResponseDTO> consultaExtratoPorPeriodo(Conta conta, LocalDate dataInicial, LocalDate dataFinal) {
+		List<Lancamento> lancamentos = lancamentoRepository.consultaLancamentosPorPeriodo(conta.getId(), dataInicial, dataFinal);
 
 		List<ComprovanteResponseDTO> comprovantesResponseDTO = new ArrayList<>();
 		lancamentos.forEach(l -> comprovantesResponseDTO.add(entidadeParaComprovanteResponseDTO(l)));
