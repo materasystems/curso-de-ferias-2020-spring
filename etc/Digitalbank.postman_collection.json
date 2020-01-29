@@ -411,15 +411,6 @@
 								"type": "text"
 							}
 						],
-						"body": {
-							"mode": "raw",
-							"raw": "{\n\t\"valor\": 1000.00,\n\t\"descricao\": \"Depósito Caixa Eletrônico\"\n}",
-							"options": {
-								"raw": {
-									"language": "json"
-								}
-							}
-						},
 						"url": {
 							"raw": "http://localhost:8080/digitalbank/api/v1/contas/1/bloquear",
 							"protocol": "http",
@@ -451,15 +442,6 @@
 								"value": "application/json"
 							}
 						],
-						"body": {
-							"mode": "raw",
-							"raw": "{\n\t\"valor\": 1000.00,\n\t\"descricao\": \"Depósito Caixa Eletrônico\"\n}",
-							"options": {
-								"raw": {
-									"language": "json"
-								}
-							}
-						},
 						"url": {
 							"raw": "http://localhost:8080/digitalbank/api/v1/contas/1/desbloquear",
 							"protocol": "http",

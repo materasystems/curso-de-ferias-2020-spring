@@ -27,7 +27,9 @@ import com.matera.cursoferias.digitalbank.utils.DigitalBankUtils;
 @Service
 public class LancamentoService {
 
-	private final LancamentoRepository lancamentoRepository;
+	private static final String COMPLEMENTO_ESTORNO = " - Estornado";
+
+    private final LancamentoRepository lancamentoRepository;
 	private final TransferenciaRepository transferenciaRepository;
 	private final EstornoRepository estornoRepository;
 
@@ -69,7 +71,7 @@ public class LancamentoService {
 		List<Lancamento> lancamentos = lancamentoRepository.findByConta_IdOrderByIdDesc(conta.getId());
 		List<ComprovanteResponseDTO> comprovantesResponseDTO = new ArrayList<>();
 
-		lancamentos.forEach(l -> comprovantesResponseDTO.add(entidadeParaComprovanteResponseDTO(l)));
+		lancamentos.forEach(lan -> comprovantesResponseDTO.add(entidadeParaComprovanteResponseDTO(lan)));
 
 		return comprovantesResponseDTO;
 	}
@@ -78,14 +80,14 @@ public class LancamentoService {
 		List<Lancamento> lancamentos = lancamentoRepository.consultaLancamentosPorPeriodo(conta.getId(), dataInicial, dataFinal);
 
 		List<ComprovanteResponseDTO> comprovantesResponseDTO = new ArrayList<>();
-		lancamentos.forEach(l -> comprovantesResponseDTO.add(entidadeParaComprovanteResponseDTO(l)));
+		lancamentos.forEach(lan -> comprovantesResponseDTO.add(entidadeParaComprovanteResponseDTO(lan)));
 
 		return comprovantesResponseDTO;
 	}
 
 	@Transactional
 	public ComprovanteResponseDTO estornaLancamento(Long idConta, Long idLancamento) {
-		Lancamento lancamento = lancamentoRepository.findByIdAndConta_Id(idLancamento, idConta).orElse(null);
+		Lancamento lancamento = buscaLancamentoConta(idConta, idLancamento);
 		Transferencia transferencia = transferenciaRepository.consultaTransferenciaPorIdLancamento(idLancamento).orElse(null);
 
 		validaEstorno(lancamento, transferencia, idConta, idLancamento);
@@ -97,9 +99,25 @@ public class LancamentoService {
 		}
 	}
 
+	@Transactional
+	public void removeLancamentoEstorno(Long idConta, Long idLancamento) {
+	    Lancamento lancamentoEstorno = buscaLancamentoConta(idConta, idLancamento);
+	    Estorno estorno = estornoRepository.findByLancamentoEstorno_Id(idLancamento)
+	                                       .orElseThrow(() -> new ServiceException("Somente lançamentos de estorno podem ser removidos."));
+	    Lancamento lancamentoOriginal = estorno.getLancamentoOriginal();
+
+	    lancamentoOriginal.getConta().setSaldo(DigitalBankUtils.calculaSaldo(Natureza.buscaPorCodigo(lancamentoOriginal.getNatureza()),
+	                                                                         lancamentoOriginal.getValor(),
+	                                                                         lancamentoOriginal.getConta().getSaldo()));
+	    lancamentoOriginal.setDescricao(lancamentoOriginal.getDescricao().replace(COMPLEMENTO_ESTORNO, ""));
+
+	    lancamentoRepository.save(lancamentoOriginal);
+	    estornoRepository.delete(estorno);
+	    lancamentoRepository.delete(lancamentoEstorno);
+	}
+
 	public ComprovanteResponseDTO consultaComprovanteLancamento(Long idConta, Long idLancamento) {
-		Lancamento lancamento = lancamentoRepository.findByIdAndConta_Id(idLancamento, idConta)
-													.orElseThrow(() -> new ServiceException("O lançamento de ID " + idLancamento + " não existe para a conta de ID " + idConta + "."));
+		Lancamento lancamento = buscaLancamentoConta(idConta, idLancamento);
 
 		return entidadeParaComprovanteResponseDTO(lancamento);
 	}
@@ -115,7 +133,6 @@ public class LancamentoService {
                                         	   .build();
 	}
 
-
 	private void validaLancamento(Lancamento lancamento) {
 	    if (SituacaoConta.BLOQUEADA.getCodigo().equals(lancamento.getConta().getSituacao())) {
             throw new ServiceException("Conta de ID " + lancamento.getConta().getId() + " está na situação Bloqueada. Novos lançamentos não são permitidos.");
@@ -127,10 +144,6 @@ public class LancamentoService {
     }
 
 	private void validaEstorno(Lancamento lancamento, Transferencia transferencia, Long idConta, Long idLancamento) {
-		if (lancamento == null) {
-			throw new ServiceException("O lançamento de ID " + idLancamento + " não existe para a conta de ID " + idConta + ".");
-		}
-
 		if (TipoLancamento.ESTORNO.getCodigo().equals(lancamento.getTipoLancamento())) {
 			throw new ServiceException("Tipo de lançamento " + lancamento.getTipoLancamento() + " não permite estornos.");
 		}
@@ -171,7 +184,7 @@ public class LancamentoService {
 														   .valor(lancamento.getValor())
 														   .build();
 
-		lancamento.setDescricao(lancamento.getDescricao() + " - Estornado");
+		lancamento.setDescricao(lancamento.getDescricao() + COMPLEMENTO_ESTORNO);
 		lancamentoRepository.save(lancamento);
 		lancamentoRepository.save(lancamentoEstorno);
 
@@ -183,6 +196,11 @@ public class LancamentoService {
 
 		return entidadeParaComprovanteResponseDTO(lancamentoEstorno);
 	}
+
+	private Lancamento buscaLancamentoConta(Long idConta, Long idLancamento) {
+        return lancamentoRepository.findByIdAndConta_Id(idLancamento, idConta)
+                                   .orElseThrow(() -> new ServiceException("O lançamento de ID " + idLancamento + " não existe para a conta de ID " + idConta + "."));
+    }
 
 	private String geraAutenticacao() {
 		return UUID.randomUUID().toString();
