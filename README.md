@@ -50,7 +50,7 @@
   * **Aula 7**
       * Validações nos *requests* usando anotações
       * *Exception handler* para tratamento de exceções
-      * Criação da estrutura do pacote **controller** com algumas requisições *POST* para a entidade de Conta
+      * Criação de requisições *POST* para a entidade de Conta
       * [Branch - aula 7](https://github.com/materasystems/curso-de-ferias-2020-spring/tree/aula7)
 
 * ### Modelagem
