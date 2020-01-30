@@ -52,6 +52,12 @@
       * *Exception handler* para tratamento de exceções
       * Criação de requisições *POST* para a entidade de Conta
       * [Branch - aula 7](https://github.com/materasystems/curso-de-ferias-2020-spring/tree/aula7)
+  * **Aula 8**
+      * Finalizando requisições *POST*, *GET* e *DELETE* para a entidade de Conta
+      * Adicionando Swagger
+      * Refatorando validações de negócio e *Exception handler* para centralizar as mensagens de erro no arquivo *messages.properties*
+      * Aplicando i18n utilizando o arquivo *messages_en.properties*
+      * [Branch - aula 8](https://github.com/materasystems/curso-de-ferias-2020-spring/tree/aula8)
 
 * ### Modelagem
     ![modelagem](etc/digitalbank-der.png)
