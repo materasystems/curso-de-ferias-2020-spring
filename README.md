@@ -58,6 +58,11 @@
       * Refatorando validações de negócio e *Exception handler* para centralizar as mensagens de erro no arquivo *messages.properties*
       * Aplicando i18n utilizando o arquivo *messages_en.properties*
       * [Branch - aula 8](https://github.com/materasystems/curso-de-ferias-2020-spring/tree/aula8)
+  * **Aula 9**
+      * Tratando exceções não esperadas com HTTP status 500 no *Exception handler*
+      * Adicionando logs com Logback
+      * Testes unitários com JUnit 5 e Mockito
+      * [Branch - aula 9](https://github.com/materasystems/curso-de-ferias-2020-spring/tree/aula9)
 
 * ### Modelagem
     ![modelagem](etc/digitalbank-der.png)

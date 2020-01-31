@@ -16,6 +16,9 @@ import com.matera.cursoferias.digitalbank.dto.response.ErroResponseDTO;
 import com.matera.cursoferias.digitalbank.dto.response.ResponseDTO;
 import com.matera.cursoferias.digitalbank.exception.ServiceException;
 
+import lombok.extern.slf4j.Slf4j;
+
+@Slf4j
 public abstract class ControllerBase {
 
     private final MessageSource messageSource;
@@ -47,6 +50,17 @@ public abstract class ControllerBase {
 
         return ResponseEntity.status(HttpStatus.BAD_REQUEST)
                              .body(ResponseDTO.comErros(erros));
+    }
+
+    @ExceptionHandler(Exception.class)
+    public ResponseEntity<ResponseDTO<Object>> handleException(Exception exception) {
+        log.error("Erro não esperado ao processar a requisição.", exception);
+
+        String mensagemErro = messageSource.getMessage("DB-99", null, LocaleContextHolder.getLocale());
+        ErroResponseDTO erro = new ErroResponseDTO("DB-99: " + mensagemErro);
+
+        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                             .body(ResponseDTO.comErro(erro));
     }
 
 }

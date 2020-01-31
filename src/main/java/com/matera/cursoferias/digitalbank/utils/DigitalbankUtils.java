@@ -4,7 +4,7 @@ import java.math.BigDecimal;
 
 import com.matera.cursoferias.digitalbank.enumerator.Natureza;
 
-public class DigitalBankUtils {
+public class DigitalbankUtils {
 
 	public static BigDecimal calculaSaldo(Natureza natureza, BigDecimal valor, BigDecimal saldoAtual) {
 		BigDecimal saldoFinal;

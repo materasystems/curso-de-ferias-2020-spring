@@ -23,7 +23,7 @@ import com.matera.cursoferias.digitalbank.enumerator.SituacaoConta;
 import com.matera.cursoferias.digitalbank.enumerator.TipoLancamento;
 import com.matera.cursoferias.digitalbank.exception.ServiceException;
 import com.matera.cursoferias.digitalbank.repository.ContaRepository;
-import com.matera.cursoferias.digitalbank.utils.DigitalBankUtils;
+import com.matera.cursoferias.digitalbank.utils.DigitalbankUtils;
 
 @Service
 public class ContaService {
@@ -175,7 +175,7 @@ public class ContaService {
 	}
 
     private void atualizaSaldo(Conta conta, BigDecimal valorLancamento, Natureza natureza) {
-        BigDecimal saldo = DigitalBankUtils.calculaSaldo(natureza, valorLancamento, conta.getSaldo());
+        BigDecimal saldo = DigitalbankUtils.calculaSaldo(natureza, valorLancamento, conta.getSaldo());
 
 		conta.setSaldo(saldo);
 		contaRepository.save(conta);

@@ -22,7 +22,7 @@ import com.matera.cursoferias.digitalbank.exception.ServiceException;
 import com.matera.cursoferias.digitalbank.repository.EstornoRepository;
 import com.matera.cursoferias.digitalbank.repository.LancamentoRepository;
 import com.matera.cursoferias.digitalbank.repository.TransferenciaRepository;
-import com.matera.cursoferias.digitalbank.utils.DigitalBankUtils;
+import com.matera.cursoferias.digitalbank.utils.DigitalbankUtils;
 
 @Service
 public class LancamentoService {
@@ -106,7 +106,7 @@ public class LancamentoService {
 	                                       .orElseThrow(() -> new ServiceException("DB-16"));
 	    Lancamento lancamentoOriginal = estorno.getLancamentoOriginal();
 
-	    lancamentoOriginal.getConta().setSaldo(DigitalBankUtils.calculaSaldo(Natureza.buscaPorCodigo(lancamentoOriginal.getNatureza()),
+	    lancamentoOriginal.getConta().setSaldo(DigitalbankUtils.calculaSaldo(Natureza.buscaPorCodigo(lancamentoOriginal.getNatureza()),
 	                                                                         lancamentoOriginal.getValor(),
 	                                                                         lancamentoOriginal.getConta().getSaldo()));
 	    lancamentoOriginal.setDescricao(lancamentoOriginal.getDescricao().replace(COMPLEMENTO_ESTORNO, ""));
@@ -173,7 +173,7 @@ public class LancamentoService {
 	private ComprovanteResponseDTO trataEstornoLancamento(Lancamento lancamento) {
 		Conta conta = lancamento.getConta();
 		Natureza natureza = defineNaturezaEstorno(lancamento);
-		conta.setSaldo(DigitalBankUtils.calculaSaldo(natureza, lancamento.getValor(), conta.getSaldo()));
+		conta.setSaldo(DigitalbankUtils.calculaSaldo(natureza, lancamento.getValor(), conta.getSaldo()));
 
 		Lancamento lancamentoEstorno = Lancamento.builder().codigoAutenticacao(geraAutenticacao())
 														   .conta(conta)
