@@ -29,6 +29,8 @@ public abstract class ControllerBase {
 
     @ExceptionHandler(ServiceException.class)
     public ResponseEntity<ResponseDTO<Object>> handleException(ServiceException exception) {
+        log.debug("Erro de negócio ao processar a requisição.", exception);
+
         String mensagemErro = messageSource.getMessage(exception.getCodigoErro(), exception.getParametros(), LocaleContextHolder.getLocale());
         ErroResponseDTO erro = new ErroResponseDTO(exception.getCodigoErro() + ": " + mensagemErro);
 
@@ -38,6 +40,8 @@ public abstract class ControllerBase {
 
     @ExceptionHandler(MethodArgumentNotValidException.class)
     public ResponseEntity<ResponseDTO<Object>> handleException(MethodArgumentNotValidException exception) {
+        log.debug("Erro ao validar a requisição.", exception);
+
         List<ErroResponseDTO> erros = new ArrayList<>();
         BindingResult bindingResult = exception.getBindingResult();
 
